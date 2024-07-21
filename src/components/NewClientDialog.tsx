@@ -18,12 +18,14 @@ import SubmitButton from "./SubmitButton";
 import { createNewClient } from "@/helpers/clients-helpers";
 import { Client } from "@/lib/types/client";
 import { useToast } from "./ui/use-toast";
+import { useTranslation } from "react-i18next";
 
 interface NewClientDialogProps {
     onRegisterClient?: ((newClient: Client) => void) | undefined;
 }
 
 export default function NewClientDialog({ onRegisterClient }: NewClientDialogProps) {
+    const { t } = useTranslation();
     const form = useForm<RegisterClientSchemaType>({
         resolver: zodResolver(registerClientSchema),
         defaultValues: {
@@ -37,10 +39,10 @@ export default function NewClientDialog({ onRegisterClient }: NewClientDialogPro
     function onClientRegistered(client: Client) {
         form.setFocus("name");
         form.reset();
-        
+
         toast({
-            title: "Cliente cadastrado",
-            description: `O cliente ${client.name} foi cadastrado com sucesso.`,
+            title: t("toast:clientRegisteredTitle"),
+            description: t("toast:clientRegisteredDescription", { name: client.name }),
         });
         onRegisterClient?.(client);
     }
@@ -60,19 +62,21 @@ export default function NewClientDialog({ onRegisterClient }: NewClientDialogPro
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant="outline">Cadastrar novo cliente</Button>
+                <Button variant="outline">{t("homePage:registerNewClientButton")}</Button>
             </DialogTrigger>
             <DialogContent>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)}>
                         <DialogHeader>
-                            <DialogTitle>Cadastrar novo cliente</DialogTitle>
+                            <DialogTitle>{t("registerClientDialog:registerClient")}</DialogTitle>
                         </DialogHeader>
                         <RegisterClientInputs control={form.control} />
                         <DialogFooter className="gap-2">
-                            <DialogClose>Cancelar</DialogClose>
+                            <DialogClose>{t("registerClientDialog:cancelButton")}</DialogClose>
                             <SubmitButton isLoading={isPendingRegister}>
-                                {isPendingRegister ? "Cadastrando..." : "Cadastrar"}
+                                {isPendingRegister
+                                    ? t("registerClientDialog:submitButtonLoading")
+                                    : t("registerClientDialog:submitButton")}
                             </SubmitButton>
                         </DialogFooter>
                     </form>

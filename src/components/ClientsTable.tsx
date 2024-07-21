@@ -3,6 +3,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from ".
 import { Client } from "@/lib/types/client";
 import { Button } from "./ui/button";
 import { Trash2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const tempMockClients: Client[] = [
     { id: "asdasd", name: "Test", email: "test@test.com" },
@@ -22,14 +23,16 @@ interface ClientTableProps {
 }
 
 export default function ClientsTable({ clients, onClientDeleteRequest }: ClientTableProps) {
+    const { t } = useTranslation();
+
     return (
         <Table>
             <TableHeader>
                 <TableRow>
-                    <TableHead>Id</TableHead>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Email</TableHead>
-                    <TableHead>Ação</TableHead>
+                    <TableHead>{t("homePage:idTableColumn")}</TableHead>
+                    <TableHead>{t("homePage:nameTableColumn")}</TableHead>
+                    <TableHead>{t("homePage:emailTableColumn")}</TableHead>
+                    <TableHead>{t("homePage:actionTableColumn")}</TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody>

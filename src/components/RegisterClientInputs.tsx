@@ -9,6 +9,7 @@ import {
 } from "./ui/form";
 import { Input } from "./ui/input";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 interface RegisterClientInputsProps {
     control: Control<
@@ -21,6 +22,8 @@ interface RegisterClientInputsProps {
 }
 
 export default function RegisterClientInputs({ control }: RegisterClientInputsProps) {
+    const { t } = useTranslation();
+
     return (
         <div>
             <FormField
@@ -28,11 +31,13 @@ export default function RegisterClientInputs({ control }: RegisterClientInputsPr
                 name="name"
                 render={({ field }) => (
                     <FormItem>
-                        <FormLabel>Nome</FormLabel>
+                        <FormLabel>{t("registerClientDialog:nameField")}</FormLabel>
                         <FormControl>
-                            <Input placeholder="Nome" {...field} />
+                            <Input placeholder={t("registerClientDialog:nameField")} {...field} />
                         </FormControl>
-                        <FormDescription>Nome do cliente</FormDescription>
+                        <FormDescription>
+                            {t("registerClientDialog:nameFieldDescription")}
+                        </FormDescription>
                         <FormMessage />
                     </FormItem>
                 )}
@@ -42,11 +47,13 @@ export default function RegisterClientInputs({ control }: RegisterClientInputsPr
                 name="email"
                 render={({ field }) => (
                     <FormItem>
-                        <FormLabel>Email</FormLabel>
+                        <FormLabel>{t("registerClientDialog:emailField")}</FormLabel>
                         <FormControl>
-                            <Input placeholder="Email" {...field} />
+                            <Input placeholder={t("registerClientDialog:emailField")} {...field} />
                         </FormControl>
-                        <FormDescription>Email do cliente</FormDescription>
+                        <FormDescription>
+                            {t("registerClientDialog:emailFieldDescription")}
+                        </FormDescription>
                         <FormMessage />
                     </FormItem>
                 )}

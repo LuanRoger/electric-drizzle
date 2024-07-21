@@ -28,9 +28,9 @@ export default function HomePage() {
     function deleteClientRequest(clientId: string) {
         setClients((prev) => prev.filter((client) => client.id !== clientId));
         toast({
-            title: "Cliente deletado",
-            description: "O cliente foi removido com sucesso."
-        })
+            title: t("toast:clientDeletedTitle"),
+            description: t("toast:clientDeletedDescription"),
+        });
         deleteClient(clientId);
     }
 
@@ -54,7 +54,7 @@ export default function HomePage() {
                         />
                     </div>
                     <div>
-                        <small>Clientes cadastrados: {clients.length}</small>
+                        <small> {t("homePage:registeredClients", { count: clients.length })}</small>
                     </div>
                 </div>
                 <ScrollArea className="h-[26rem]">
