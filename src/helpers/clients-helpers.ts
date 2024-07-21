@@ -6,8 +6,6 @@ interface CreateClient {
 }
 
 export async function createNewClient(clientInfo: CreateClient) {
-    //Delay to simulate a request
-    await new Promise((resolve) => setTimeout(resolve, 1000));
     try {
         const result = await window.dbClients.createNewClient(clientInfo);
         return result as Client;
@@ -21,4 +19,10 @@ export async function getAllClients(): Promise<Client[]> {
     const result = await window.dbClients.getAllClients();
 
     return result as Client[];
+}
+
+export async function deleteClient(clientId: string) {
+    const result = await window.dbClients.deleteClient(clientId);
+
+    return result as string;
 }

@@ -3,16 +3,17 @@ import ToggleTheme from "@/components/ToggleTheme";
 import { useTranslation } from "react-i18next";
 import LangToggle from "@/components/LangToggle";
 import { Client } from "@/lib/types/client";
-import { getAllClients } from "@/helpers/clients-helpers";
+import { deleteClient, getAllClients } from "@/helpers/clients-helpers";
 import ClientsTable from "@/components/ClientsTable";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import NewClientDialog from "@/components/NewClientDialog";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function HomePage() {
     const { t } = useTranslation();
+    const { toast } = useToast();
     const [clients, setClients] = useState<Client[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [hasError, setHasError] = useState<boolean>(false);
 
     useEffect(() => {
         async function fetchClients() {
@@ -21,9 +22,17 @@ export default function HomePage() {
 
         fetchClients()
             .then((data) => setClients(data))
-            .catch((_) => setHasError(true))
             .finally(() => setIsLoading(false));
     }, []);
+
+    function deleteClientRequest(clientId: string) {
+        setClients((prev) => prev.filter((client) => client.id !== clientId));
+        toast({
+            title: "Cliente deletado",
+            description: "O cliente foi removido com sucesso."
+        })
+        deleteClient(clientId);
+    }
 
     return (
         <div className="space-y-4 px-4">
@@ -49,7 +58,7 @@ export default function HomePage() {
                     </div>
                 </div>
                 <ScrollArea className="h-[26rem]">
-                    <ClientsTable clients={clients} />
+                    <ClientsTable clients={clients} onClientDeleteRequest={deleteClientRequest} />
                 </ScrollArea>
             </div>
         </div>

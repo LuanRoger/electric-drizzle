@@ -1,4 +1,4 @@
-import React, { useState, useTransition } from "react";
+import React, { useRef, useState } from "react";
 import {
     Dialog,
     DialogClose,
@@ -35,7 +35,9 @@ export default function NewClientDialog({ onRegisterClient }: NewClientDialogPro
     const [isPendingRegister, setIsPendingRegister] = useState(false);
 
     function onClientRegistered(client: Client) {
+        form.setFocus("name");
         form.reset();
+        
         toast({
             title: "Cliente cadastrado",
             description: `O cliente ${client.name} foi cadastrado com sucesso.`,

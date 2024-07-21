@@ -20,6 +20,7 @@ interface ElectronWindow {
 interface DbClients {
     createNewClient: (clientData: any) => Promise<any>;
     getAllClients: () => Promise<any>;
+    deleteClient: (clientId: string) => Promise<string>;
 }
 
 declare interface Window {
