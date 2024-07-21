@@ -1,5 +1,5 @@
 import { db } from "../db_client";
-import { clients } from "@/lib/db/schemas/clients_schema";
+import { clients } from "@/lib/db/schemas/clients";
 import { generateUuid } from "@/lib/cripto";
 
 export interface CreateClient {
