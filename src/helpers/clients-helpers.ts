@@ -6,13 +6,14 @@ interface CreateClient {
 }
 
 export async function createNewClient(clientInfo: CreateClient) {
+    //Delay to simulate a request
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     try {
-        await window.dbClients.createNewClient(clientInfo);
-        return true;
-    }
-    catch (error) {
+        const result = await window.dbClients.createNewClient(clientInfo);
+        return result as Client;
+    } catch (error) {
         console.error(error);
-        return false;
+        return null;
     }
 }
 

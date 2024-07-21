@@ -18,7 +18,7 @@ interface ElectronWindow {
     close: () => Promise<void>;
 }
 interface DbClients {
-    createNewClient: (clientData: any) => Promise<void>;
+    createNewClient: (clientData: any) => Promise<any>;
     getAllClients: () => Promise<any>;
 }
 
