@@ -17,7 +17,7 @@ interface ElectronWindow {
     maximize: () => Promise<void>;
     close: () => Promise<void>;
 }
-interface ClientsContext {
+interface DbClients {
     createNewClient: (clientData: any) => Promise<void>;
     getAllClients: () => Promise<any>;
 }
@@ -25,5 +25,5 @@ interface ClientsContext {
 declare interface Window {
     themeMode: ThemeModeContext;
     electronWindow: ElectronWindow;
-    clientsContext: ClientsContext;
+    dbClients: DbClients;
 }

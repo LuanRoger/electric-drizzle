@@ -1,13 +1,13 @@
 import { Client } from "@/lib/types/client";
 
-export interface CreateClient {
+interface CreateClient {
     name: string;
     email: string;
 }
 
 export async function createNewClient(clientInfo: CreateClient) {
     try {
-        await window.clientsContext.createNewClient(clientInfo);
+        await window.dbClients.createNewClient(clientInfo);
         return true;
     }
     catch (error) {
@@ -17,7 +17,7 @@ export async function createNewClient(clientInfo: CreateClient) {
 }
 
 export async function getAllClients(): Promise<Client[]> {
-    const result = await window.clientsContext.getAllClients();
+    const result = await window.dbClients.getAllClients();
 
     return result as Client[];
 }

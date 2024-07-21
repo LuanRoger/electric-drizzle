@@ -1,5 +1,5 @@
 import { CreateClient, createNewClient, getAllClients } from "@/lib/db/queries/clients_queries";
-import { BrowserWindow, ipcMain } from "electron";
+import { ipcMain } from "electron";
 import { CREATE_NEW_CLIENT, GET_ALL_CLIENTS } from "./clients-channels";
 import { Client } from "@/lib/types/client";
 
