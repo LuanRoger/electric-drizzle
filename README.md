@@ -1,4 +1,4 @@
-# eletric-drizzle
+# electric-drizzle
 
 An Electron app to showcase the use of the [`drizzle`](https://orm.drizzle.team) library using the [electron-shadcn](https://github.com/LuanRoger/electron-shadcn) template as base.
 
@@ -18,7 +18,7 @@ An Electron app to showcase the use of the [`drizzle`](https://orm.drizzle.team)
 It's recomended to use Docker to run the PostgreSQL instance. You can use the following command to start a PostgreSQL instance:
 
 ```bash
-docker run --name eletric-drizzle-db -p 5432:5432 -d -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=admin postgres
+docker run --name electric-drizzle-db -p 5432:5432 -d -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=admin postgres
 ```
 
 ### Steps

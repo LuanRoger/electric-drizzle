@@ -1,6 +1,6 @@
 {
-    "name": "eletric-drizzle",
-    "productName": "eletric-drizzle",
+    "name": "electric-drizzle",
+    "productName": "electric-drizzle",
     "version": "1.0.0",
     "description": "shadcn-ui and Drizzle ORM with Electron. Based on electron-shadcn",
     "main": ".vite/build/main.js",
