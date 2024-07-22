@@ -2,7 +2,7 @@
 
 An Electron app to showcase the use of the [`drizzle`](https://orm.drizzle.team) library using the [electron-shadcn](https://github.com/LuanRoger/electron-shadcn) template as base.
 
-![Screenshot]()
+![Screenshot](https://github.com/LuanRoger/electric-drizzle/blob/main/images/demo.png)
 
 > [!WARNING]
 > This project is just for demo purposes, it will not be actively maintained.
