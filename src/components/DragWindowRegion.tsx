@@ -52,7 +52,11 @@ export default function DragWindowRegion({ title }: DragWindowRegionProps) {
                 </button>
             </div>
             <div className="draglayer w-full" />
-            {title && <div className="flex flex-1 items-center justify-center p-2">{title}</div>}
+            {title && (
+                <div className="flex flex-1 items-center justify-center whitespace-nowrap p-2 text-xs text-gray-400 select-none">
+                    {title}
+                </div>
+            )}
         </div>
     );
 }
