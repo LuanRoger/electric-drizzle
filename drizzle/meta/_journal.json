@@ -1,0 +1,13 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1775675258538,
+      "tag": "0000_nappy_marvel_zombies",
+      "breakpoints": true
+    }
+  ]
+}
