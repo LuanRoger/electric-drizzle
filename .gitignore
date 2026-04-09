@@ -102,3 +102,6 @@ out/
 
 # Tanstack
 .tanstack/
+
+# DB
+*.db

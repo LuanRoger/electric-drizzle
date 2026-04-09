@@ -1,7 +1,7 @@
-import { boolean, pgTable, serial, text } from "drizzle-orm/pg-core";
+import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
-export const todoSchema = pgTable("todos", {
-  id: serial("id").primaryKey(),
+export const todoSchema = sqliteTable("todos", {
+  id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
   title: text("title").notNull(),
-  done: boolean("done").notNull().default(false),
+  done: integer("done", { mode: "boolean" }).notNull().default(false),
 });

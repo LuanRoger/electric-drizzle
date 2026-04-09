@@ -18,15 +18,17 @@
     "test:unit": "vitest",
     "test:e2e": "playwright test",
     "test:all": "vitest run && playwright test",
-    "db:push": "drizzle-kit push"
+    "db:push": "drizzle-kit push",
+    "db:generate": "drizzle-kit generate"
   },
   "author": "ROG <luanroger.dev@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@electric-sql/pglite": "^0.4.3",
     "@fontsource-variable/geist": "^5.2.8",
     "@fontsource-variable/geist-mono": "^5.2.7",
+    "@hookform/resolvers": "^5.2.2",
     "@icons-pack/react-simple-icons": "^13.13.0",
+    "@libsql/client": "^0.17.2",
     "@orpc/client": "^1.13.9",
     "@orpc/server": "^1.13.9",
     "@tailwindcss/vite": "^4.2.2",
@@ -43,6 +45,7 @@
     "radix-ui": "^1.4.3",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
+    "react-hook-form": "^7.72.1",
     "react-i18next": "^16.6.2",
     "shadcn": "^4.1.0",
     "tailwind-merge": "^3.5.0",

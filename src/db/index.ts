@@ -1,10 +1,6 @@
-import { PGlite } from "@electric-sql/pglite";
-import { drizzle } from "drizzle-orm/pglite";
+import { createClient } from "@libsql/client";
+import { drizzle } from "drizzle-orm/libsql";
 import { todoSchema } from "./schemas/todo";
 
-if (!process.env.DATABASE_URL) {
-  throw new Error("DATABASE_URL environment variable is not set");
-}
-
-const pgLite = new PGlite(process.env.DATABASE_URL);
-export const db = drizzle({ client: pgLite, schema: { todoSchema } });
+const client = createClient({ url: "file:local.db" });
+export const db = drizzle({ client, schema: { todoSchema } });
