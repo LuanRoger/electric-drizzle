@@ -1,59 +1,76 @@
-import { SiElectron, SiReact, SiVite } from "@icons-pack/react-simple-icons";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState, useTransition } from "react";
-import { useTranslation } from "react-i18next";
-import { getAppVersion } from "@/actions/app";
-import ExternalLink from "@/components/external-link";
-import LangToggle from "@/components/lang-toggle";
-import NavigationMenu from "@/components/navigation-menu";
-import ToggleTheme from "@/components/toggle-theme";
-
-/*
- * Update this page to modify your home page.
- * You can delete this file component to start from a blank page.
- */
+import { useEffect, useTransition } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { createTodo, getTodos } from "@/actions/db";
+import { Button } from "@/components/ui/button";
+import {
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldLabel,
+} from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import { type TodoCreate, todoCreate } from "@/utils/schemas";
 
 function HomePage() {
-  const iconSize = 48;
+  const { control, handleSubmit } = useForm({
+    resolver: zodResolver(todoCreate),
+    defaultValues: {
+      title: "",
+    },
+  });
+  const [isPending, startAction] = useTransition();
 
-  const [appVersion, setAppVersion] = useState("0.0.0");
-  const [, startGetAppVersion] = useTransition();
-  const { t } = useTranslation();
+  function onSubmit(data: TodoCreate) {
+    const { title } = data;
 
-  useEffect(
-    () => startGetAppVersion(() => getAppVersion().then(setAppVersion)),
-    []
-  );
+    startAction(async () => {
+      await createTodo(title);
+    });
+  }
+
+  useEffect(() => {
+    console.log("Fetching todos...");
+    getTodos()
+      .then((todos) => {
+        console.log("Fetched todos:", todos);
+      })
+      .catch((error) => {
+        console.error("Error fetching todos:", error);
+      });
+  });
 
   return (
-    <>
-      <NavigationMenu />
-      <div className="flex h-full flex-col items-center justify-center">
-        <div className="flex flex-col items-end justify-center gap-0.5">
-          <div className="inline-flex gap-2">
-            <SiReact size={iconSize} />
-            <SiVite size={iconSize} />
-            <SiElectron size={iconSize} />
-          </div>
-          <span className="flex items-end justify-end">
-            <h1 className="font-bold font-mono text-4xl">{t("appName")}</h1>
-            <p className="text-muted-foreground text-sm">v{appVersion}</p>
-          </span>
-          <div className="flex w-full justify-between">
-            <ExternalLink
-              className="flex gap-2 text-muted-foreground text-sm"
-              href="https://github.com/LuanRoger"
-            >
-              {t("madeBy")}
-            </ExternalLink>
-            <div className="flex items-center gap-2">
-              <LangToggle />
-              <ToggleTheme />
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
+    <div>
+      <form
+        className="flex flex-col rounded-md border border-muted p-4"
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <Controller
+          control={control}
+          name="title"
+          render={({ field, fieldState }) => {
+            return (
+              <Field>
+                <FieldLabel>Title</FieldLabel>
+                <Input {...field} />
+                <FieldDescription>
+                  This is the title of your todo item.
+                </FieldDescription>
+                {fieldState.error && (
+                  <FieldError>{fieldState.error.message}</FieldError>
+                )}
+              </Field>
+            );
+          }}
+        />
+        <Button className="self-end" type="submit">
+          Create
+        </Button>
+        {isPending && <p>Creating todo...</p>}
+      </form>
+    </div>
   );
 }
 
