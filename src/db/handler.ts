@@ -9,7 +9,13 @@ export const getTodos = os.handler(async () => {
 });
 
 export const createTodo = os.input(todoCreate).handler(async ({ input }) => {
-  await db.insert(todoSchema).values(input);
+  const [createdTodo] = await db.insert(todoSchema).values(input).returning();
+
+  if (!createdTodo) {
+    throw new Error("Failed to create todo.");
+  }
+
+  return createdTodo;
 });
 
 export const updateTodoCheck = os
@@ -17,7 +23,17 @@ export const updateTodoCheck = os
   .handler(async ({ input }) => {
     const { id, done } = input;
 
-    await db.update(todoSchema).set({ done }).where(eq(todoSchema.id, id));
+    const [updatedTodo] = await db
+      .update(todoSchema)
+      .set({ done })
+      .where(eq(todoSchema.id, id))
+      .returning();
+
+    if (!updatedTodo) {
+      throw new Error(`Todo with id ${id} was not found.`);
+    }
+
+    return updatedTodo;
   });
 
 export const deleteTodoById = os
@@ -25,5 +41,14 @@ export const deleteTodoById = os
   .handler(async ({ input }) => {
     const { id } = input;
 
-    await db.delete(todoSchema).where(eq(todoSchema.id, id));
+    const [deletedTodo] = await db
+      .delete(todoSchema)
+      .where(eq(todoSchema.id, id))
+      .returning();
+
+    if (!deletedTodo) {
+      throw new Error(`Todo with id ${id} was not found.`);
+    }
+
+    return deletedTodo;
   });

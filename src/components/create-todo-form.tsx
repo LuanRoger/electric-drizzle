@@ -1,8 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useTransition } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { toast } from "sonner";
-import { createTodo } from "@/actions/db";
 import {
   Field,
   FieldDescription,
@@ -13,27 +10,25 @@ import { Input } from "@/components/ui/input";
 import { type TodoCreate, todoCreate } from "@/utils/schemas";
 import { Button } from "./ui/button";
 
-export default function CreateTodoForm() {
-  const { control, handleSubmit } = useForm({
+interface CreateTodoFormProps {
+  isPending: boolean;
+  onCreateTodo: (title: string) => void;
+}
+
+export default function CreateTodoForm({
+  isPending,
+  onCreateTodo,
+}: CreateTodoFormProps) {
+  const { control, handleSubmit, reset } = useForm<TodoCreate>({
     resolver: zodResolver(todoCreate),
     defaultValues: {
       title: "",
     },
   });
-  const [isPending, startAction] = useTransition();
 
   function onSubmit(data: TodoCreate) {
-    const { title } = data;
-
-    startAction(async () => {
-      try {
-        await createTodo(title);
-        toast.success("Todo created successfully!");
-      } catch (error) {
-        console.log("Error creating todo:", error);
-        toast.error("Failed to create todo. Please try again.");
-      }
-    });
+    onCreateTodo(data.title);
+    reset();
   }
 
   return (
@@ -48,7 +43,7 @@ export default function CreateTodoForm() {
           return (
             <Field>
               <FieldLabel>Title</FieldLabel>
-              <Input {...field} />
+              <Input {...field} disabled={isPending} />
               <FieldDescription>
                 This is the title of your todo item.
               </FieldDescription>
@@ -59,10 +54,9 @@ export default function CreateTodoForm() {
           );
         }}
       />
-      <Button className="self-end" type="submit">
-        Create
+      <Button className="self-end" disabled={isPending} type="submit">
+        {isPending ? "Saving..." : "Create"}
       </Button>
-      {isPending && <p>Creating todo...</p>}
     </form>
   );
 }
