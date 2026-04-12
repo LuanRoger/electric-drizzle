@@ -2,9 +2,9 @@ import { Moon } from "lucide-react";
 import { toggleTheme } from "@/actions/theme";
 import { Button } from "@/components/ui/button";
 
-export default function ToggleTheme() {
+export default function ToggleTheme({ className }: { className?: string }) {
   return (
-    <Button onClick={toggleTheme} size="icon">
+    <Button className={className} onClick={toggleTheme} size="icon">
       <Moon size={16} />
     </Button>
   );

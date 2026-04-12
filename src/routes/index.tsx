@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import { getTodos } from "@/actions/db";
 import CreateTodoForm from "@/components/create-todo-form";
 import TodoTable from "@/components/todo-table";
+import ToggleTheme from "@/components/toggle-theme";
 import { useTodos } from "@/hooks/use-todos";
 import type { Todo } from "@/types/todos";
 
@@ -21,6 +22,7 @@ function HomePageContent({ todosPromise }: HomePageContentProps) {
 
   return (
     <div className="space-y-4">
+      <ToggleTheme />
       <CreateTodoForm isPending={isPending} onCreateTodo={handleCreateTodo} />
       <TodoTable
         isPending={isPending}
