@@ -2,7 +2,6 @@ import {
   type ElectronApplication,
   _electron as electron,
   expect,
-  type Page,
   test,
 } from "@playwright/test";
 import { findLatestBuild, parseElectronApp } from "electron-playwright-helpers";
@@ -22,23 +21,22 @@ test.beforeAll(async () => {
   electronApp = await electron.launch({
     args: [appInfo.main],
   });
-  electronApp.on("window", (page) => {
-    const filename = page.url()?.split("/").pop();
-    console.log(`Window opened: ${filename}`);
-
-    page.on("pageerror", (error) => {
-      console.error(error);
-    });
-    page.on("console", (msg) => {
-      console.log(msg.text());
-    });
-  });
 });
 
-test("renders the first page", async () => {
-  const page: Page = await electronApp.firstWindow();
+test.afterAll(async () => {
+  await electronApp.close();
+});
 
-  const title = await page.waitForSelector("h1");
-  const text = await title.textContent();
-  expect(text).toBe("electron-shadcn");
+test("shows todo form and table in home page", async () => {
+  const page = await electronApp.firstWindow();
+
+  await expect(page.locator('input[name="title"]')).toBeVisible();
+  await expect(
+    page.getByRole("button", {
+      name: "Create",
+    })
+  ).toBeVisible();
+  await expect(
+    page.getByRole("columnheader", { name: "Actions" })
+  ).toBeVisible();
 });
