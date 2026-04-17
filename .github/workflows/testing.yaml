@@ -21,6 +21,8 @@ jobs:
   test-e2e:
     timeout-minutes: 10
     runs-on: windows-latest
+    env:
+      DB_FILE_NAME: file:local.db
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
@@ -28,6 +30,8 @@ jobs:
           node-version: 24
       - name: Install dependencies
         run: npm ci
+      - name: Create database schema
+        run: npm run db:push
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
       - name: Create Executable
