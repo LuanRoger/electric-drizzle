@@ -34,6 +34,8 @@ jobs:
         run: npm run db:push
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
+      - name: Package Electron app
+        run: npm run package
       - name: Run Playwright tests
         run: npm run test:e2e
       - uses: actions/upload-artifact@v4

@@ -15,9 +15,9 @@
     "bump-ui": "ts-node ./scripts/bump-ui.ts",
     "test": "vitest run",
     "test:watch": "vitest watch",
-    "test:unit": "vitest",
+    "test:unit": "vitest run",
     "test:e2e": "playwright test",
-    "test:all": "vitest run && playwright test",
+    "test:all": "vitest run && npm run test:e2e",
     "db:push": "drizzle-kit push",
     "db:generate": "drizzle-kit generate"
   },

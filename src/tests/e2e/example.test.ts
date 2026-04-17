@@ -11,7 +11,7 @@ import { findLatestBuild, parseElectronApp } from "electron-playwright-helpers";
  * https://www.electronjs.org/pt/docs/latest/tutorial/automated-testing#using-playwright
  */
 
-let electronApp: ElectronApplication;
+let electronApp: ElectronApplication | undefined;
 
 test.beforeAll(async () => {
   const latestBuild = findLatestBuild();
@@ -24,10 +24,16 @@ test.beforeAll(async () => {
 });
 
 test.afterAll(async () => {
-  await electronApp.close();
+  if (electronApp) {
+    await electronApp.close();
+  }
 });
 
 test("shows todo form and table in home page", async () => {
+  if (!electronApp) {
+    throw new Error("Electron app did not start");
+  }
+
   const page = await electronApp.firstWindow();
 
   await expect(page.locator('input[name="title"]')).toBeVisible();
