@@ -1,3 +1,0 @@
-export const CREATE_NEW_CLIENT = "CREATE_NEW_CLIENT";
-export const GET_ALL_CLIENTS = "GET_ALL_CLIENTS";
-export const DELETE_CLIENT = "DELETE_CLIENT";

@@ -100,4 +100,8 @@ out/
 /blob-report/
 /playwright/.cache/
 
-.idea/
+# Tanstack
+.tanstack/
+
+# DB
+*.db
